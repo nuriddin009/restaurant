@@ -22,7 +22,6 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Column(unique = true, nullable = false)
     private String phoneNumber;
-    @Size(min = 6)
     private String password;
     private String firstName;
     private String lastName;
