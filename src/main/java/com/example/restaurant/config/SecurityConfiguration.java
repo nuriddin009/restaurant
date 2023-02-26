@@ -30,8 +30,25 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/**")
+                .requestMatchers("/api/**", "/api/v1/img")
                 .permitAll()
+                .requestMatchers("/",
+                        "/favicon.ico",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.webp",
+                        "/**/*.jpg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/swagger-ui.html",
+                        "/swagger-resources/**",
+                        "/v2/**",
+                        "/csrf",
+                        "/webjars/**")
+                .permitAll()
+                .requestMatchers("/api/v1/img").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

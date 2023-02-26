@@ -2,11 +2,11 @@ package com.example.restaurant.entity;
 
 import com.example.restaurant.entity.template.AbstractEntity;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

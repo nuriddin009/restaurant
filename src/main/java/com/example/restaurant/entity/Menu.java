@@ -1,10 +1,7 @@
 package com.example.restaurant.entity;
 
 import com.example.restaurant.entity.template.AbstractEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,7 +18,15 @@ public class Menu extends AbstractEntity {
     @Column(length = 50)
     private String productName;
 
-    private Integer price;
+    private Long price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "attachment_id")
+    private Attachment attachment;
+
 
 
 }

@@ -33,37 +33,37 @@ public class AuthService {
     private final RoleRepository roleRepository;
 
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        Optional<User> byPhoneNumber = userRepository.findByPhoneNumber(request.getPhoneNumber());
-        if (byPhoneNumber.isEmpty()) {
-            try {
-                User user = User.builder()
-                        .firstName(request.getFirstName())
-                        .lastName(request.getFirstName())
-                        .phoneNumber(request.getPhoneNumber())
-                        .password(passwordEncoder.encode(request.getPassword()))
-                        .roles(List.of(roleRepository.getReferenceById(1)))
-                        .build();
-                userRepository.save(user);
-
-                Map<String, Object> claims = new HashMap<>();
-                claims.put(RoleEnum.ROLE_USER.name(), RoleEnum.ROLE_USER.name());
-
-                String token = jwtService.generateToken(claims, user);
-
-                return AuthenticationResponse
-                        .builder()
-                        .accessToken(token)
-                        .success(true)
-                        .message("You have successfully registered")
-                        .build();
-            } catch (Exception e) {
-                return new AuthenticationResponse(false, "The phone number or password is incorrect");
-            }
-        } else {
-            return new AuthenticationResponse(false, "This number is registered");
-        }
-    }
+//    public AuthenticationResponse register(RegisterRequest request) {
+//        Optional<User> byPhoneNumber = userRepository.findByPhoneNumber(request.getPhoneNumber());
+//        if (byPhoneNumber.isEmpty()) {
+//            try {
+//                User user = User.builder()
+//                        .firstName(request.getFirstName())
+//                        .lastName(request.getFirstName())
+//                        .phoneNumber(request.getPhoneNumber())
+//                        .password(passwordEncoder.encode(request.getPassword()))
+//                        .roles(List.of(roleRepository.getReferenceById(1)))
+//                        .build();
+//                userRepository.save(user);
+//
+//                Map<String, Object> claims = new HashMap<>();
+//                claims.put(RoleEnum.ROLE_USER.name(), RoleEnum.ROLE_USER.name());
+//
+//                String token = jwtService.generateToken(claims, user);
+//
+//                return AuthenticationResponse
+//                        .builder()
+//                        .accessToken(token)
+//                        .success(true)
+//                        .message("You have successfully registered")
+//                        .build();
+//            } catch (Exception e) {
+//                return new AuthenticationResponse(false, "The phone number or password is incorrect");
+//            }
+//        } else {
+//            return new AuthenticationResponse(false, "This number is registered");
+//        }
+//    }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         try {
