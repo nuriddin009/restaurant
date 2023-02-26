@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface MenuRepository extends JpaRepository<Menu, UUID> {
 
 
-    @Query(value = "select m.id as id, m.product_name as productName, m.price as price, m.attachment_id as attachmentId\n" +
+    @Query(value = "select cast(m.id as varchar) as id, m.product_name as productName, m.price as price, m.attachment_id as attachmentId\n" +
             "from menu m\n" +
             "         inner join category c on c.id = m.category_id\n" +
             "where ((:categoryId is not null and c.id = :categoryId) or (:categoryId is null))\n" +

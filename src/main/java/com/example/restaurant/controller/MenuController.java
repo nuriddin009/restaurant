@@ -35,7 +35,7 @@ public class MenuController {
     @PostMapping
     public ResponseEntity<BaseResponse<ApiResponse>> createMenu(@Valid @RequestBody MenuDto menuDto) {
         BaseResponse<ApiResponse> response = new BaseResponse<>();
-        response = service.createMenu(response,menuDto);
+        response = service.createMenu(response, menuDto);
         HttpStatus status = response.getError() ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.OK;
         return new ResponseEntity<>(response, status);
     }

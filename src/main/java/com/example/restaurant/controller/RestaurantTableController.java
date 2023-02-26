@@ -3,18 +3,17 @@ package com.example.restaurant.controller;
 import com.example.restaurant.dto.request.OrderRequest;
 import com.example.restaurant.dto.request.TableRequest;
 import com.example.restaurant.dto.response.ApiResponse;
+import com.example.restaurant.dto.response.BaseResponse;
 import com.example.restaurant.service.RestaurantTableService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,5 +38,16 @@ public class RestaurantTableController {
                 .body(service.registerNewTable(request));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_WAITER','ROLE_ADMIN')")
+    @PatchMapping("/change_status")
+    public ResponseEntity<BaseResponse<?>> changeStatus(
+            @RequestParam UUID tableId,
+            @RequestParam String tableStatus
+    ) {
+        BaseResponse<?> response = new BaseResponse<>();
+        response = service.changeStatus(tableId, tableStatus, response);
+        HttpStatus status = response.getError() ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
+        return new ResponseEntity<>(response, status);
+    }
 
 }

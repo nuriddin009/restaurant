@@ -4,6 +4,7 @@ import com.example.restaurant.dto.request.OrderItemRequest;
 import com.example.restaurant.dto.request.OrderRequest;
 import com.example.restaurant.dto.request.TableRequest;
 import com.example.restaurant.dto.response.ApiResponse;
+import com.example.restaurant.dto.response.BaseResponse;
 import com.example.restaurant.entity.Order;
 import com.example.restaurant.entity.OrderItem;
 import com.example.restaurant.entity.RestaurantTable;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,5 +55,18 @@ public class RestaurantTableService {
                 AvailabilityStatus.VACANT
         ));
         return new ApiResponse(true, save, "Table created");
+    }
+
+    public BaseResponse<?> changeStatus(UUID tableId, String tableStatus, BaseResponse<?> response) {
+        try {
+            RestaurantTable restaurantTable = tableRepository.getReferenceById(tableId);
+            restaurantTable.setAvailabilityStatus(AvailabilityStatus.valueOf(tableStatus));
+            tableRepository.save(restaurantTable);
+            response.setMessage("Table status updated");
+        } catch (Exception e) {
+            response.setMessage(e.getMessage());
+            response.setError(true);
+        }
+        return response;
     }
 }
