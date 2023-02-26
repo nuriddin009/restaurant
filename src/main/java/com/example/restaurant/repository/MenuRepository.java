@@ -23,6 +23,6 @@ public interface MenuRepository extends JpaRepository<Menu, UUID> {
                     "         inner join category c on c.id = m.category_id\n" +
                     "where ((:categoryId is not null and c.id = :categoryId) or (:categoryId is null))\n" +
                     "  and upper(m.product_name) ilike upper(concat('%', :productName, '%'))",nativeQuery = true)
-    Page<MenuProjection> getMenuBy(UUID categoryId, String name, Pageable pageable);
+    Page<MenuProjection> getMenuBy(UUID categoryId, String productName, Pageable pageable);
 
 }
